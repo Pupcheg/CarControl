@@ -1,23 +1,23 @@
 package me.supcheg.carcontrol.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import me.supcheg.carcontrol.entity.CarPart;
 import me.supcheg.carcontrol.repository.CarPartRepository;
-import org.springframework.stereotype.Repository;
+import me.supcheg.carcontrol.service.CarPartService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/car_part")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CarPartRestController {
     private final CarPartRepository repository;
+    private final CarPartService service;
 
     @GetMapping("list")
     public List<CarPart> list() {
@@ -25,8 +25,8 @@ public class CarPartRestController {
     }
 
     @GetMapping("find_by_id")
-    public Optional<CarPart> findById(@RequestParam UUID uniqueId) {
-        return repository.findById(uniqueId);
+    public CarPart findById(@RequestParam UUID uniqueId) {
+        return service.getById(uniqueId);
     }
 
     @GetMapping("find_by_name")

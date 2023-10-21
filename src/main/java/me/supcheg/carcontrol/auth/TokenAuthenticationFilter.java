@@ -4,8 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +16,7 @@ import java.util.Collections;
 import java.util.UUID;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class TokenAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenUtil tokenUtil;
 
@@ -32,7 +31,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if (token != null) {
                 UUID uniqueId = tokenUtil.getUniqueIdFromToken(token);
                 if (uniqueId != null) {
-                    Authentication authentication = new UsernamePasswordAuthenticationToken(token, uniqueId, Collections.emptyList());
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(token, null, Collections.emptyList());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
@@ -47,5 +46,13 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             return token.substring(7);
         }
         return null;
+    }
+
+    public static UUID getUserUniqueId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            return (UUID) authentication.getCredentials();
+        }
+        throw new IllegalStateException();
     }
 }

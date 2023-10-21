@@ -26,7 +26,7 @@ public class JwtTokenUtil {
         Date expiration = new Date(now.getTime() + expirationTime);
 
         return Jwts.builder()
-                .claim("uniqueId", uniqueId)
+                .claim("uniqueId", uniqueId.toString())
                 .issuedAt(now)
                 .expiration(expiration)
                 .signWith(secretKey)
@@ -40,22 +40,9 @@ public class JwtTokenUtil {
                     .build()
                     .parseSignedClaims(token);
 
-            return claimsJws.getPayload().get("uniqueId", UUID.class);
+            return UUID.fromString(claimsJws.getPayload().get("uniqueId", String.class));
         } catch (Exception e) {
             return null;
-        }
-    }
-
-    public boolean verifyToken(String token) {
-        try {
-            Jwts.parser()
-                    .verifyWith(secretKey)
-                    .build()
-                    .parseSignedClaims(token);
-
-            return true;
-        } catch (Exception e) {
-            return false;
         }
     }
 }
