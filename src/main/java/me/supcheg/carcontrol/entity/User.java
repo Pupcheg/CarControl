@@ -29,4 +29,7 @@ public class User {
     @Column(nullable = false)
     @JsonProperty("email")
     private String email;
+
+    @Column(nullable = false)
+    private String encodedPassword;
 }
