@@ -23,7 +23,7 @@ public class UserService {
     public String register(@RequestParam String username, @RequestParam String email, @RequestParam String password) {
         Optional<User> byEmail = repository.findByEmail(email);
         if (byEmail.isPresent()) {
-            throw new IllegalStateException("User with email=" + email + " already registered");
+            throw new IllegalArgumentException("User with email=" + email + " already registered");
         }
 
         User user = new User(UUID.randomUUID(), username, email, passwordEncoder.encode(password));
