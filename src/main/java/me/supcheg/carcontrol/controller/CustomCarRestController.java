@@ -70,7 +70,7 @@ public class CustomCarRestController {
         return service.modify(uniqueId, name, type, parts, mileageInKilometers);
     }
 
-    @GetMapping("modify")
+    @GetMapping("remove")
     public ResponseEntity<?> remove(@RequestParam UUID uniqueId) {
         return service.remove(uniqueId);
     }
