@@ -4,8 +4,11 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import me.supcheg.carcontrol.auth.TokenAuthenticationFilter;
 import me.supcheg.carcontrol.entity.CarPart;
+import me.supcheg.carcontrol.entity.CustomCar;
 import me.supcheg.carcontrol.entity.CustomCarPart;
 import me.supcheg.carcontrol.repository.CustomCarPartRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,5 +97,20 @@ public class CustomCarPartService {
         }
 
         return repository.save(customCarPart);
+    }
+
+    public ResponseEntity<?> remove(UUID uniqueId) {
+        CustomCarPart customCarPart = getById(uniqueId);
+        verifyCanEdit(customCarPart);
+        repository.delete(customCarPart);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private void verifyCanEdit(CustomCarPart part) {
+        UUID userUniqueId = TokenAuthenticationFilter.getUserUniqueId();
+        if (!part.getOwnerUniqueId().equals(userUniqueId)) {
+            throw new AccessDeniedException("User with uniqueId=" + userUniqueId
+                    + " can't edit CustomCarPart with uniqueId=" + part.getUniqueId());
+        }
     }
 }

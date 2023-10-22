@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.supcheg.carcontrol.entity.CustomCarPart;
 import me.supcheg.carcontrol.repository.CustomCarPartRepository;
 import me.supcheg.carcontrol.service.CustomCarPartService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,6 +71,11 @@ public class CustomCarPartRestController {
                                 @RequestParam(name = "installation_date", required = false) Date installationDate,
                                 @RequestParam(name = "strength_expire_date", required = false) Date strengthExpireDate) {
         return service.modify(uniqueId, name, typeKey, originalStrengthInKilometers, leftStrengthInKilometers, installationDate, strengthExpireDate);
+    }
+
+    @GetMapping("remove")
+    public ResponseEntity<?> remove(@RequestParam UUID uniqueId) {
+        return service.remove(uniqueId);
     }
 }
 

@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import me.supcheg.carcontrol.entity.CustomCar;
 import me.supcheg.carcontrol.repository.CustomCarRepository;
 import me.supcheg.carcontrol.service.CustomCarService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -31,17 +33,17 @@ public class CustomCarRestController {
     }
 
     @GetMapping("find_by_owner")
-    public List<CustomCar> findWithUser(@RequestParam UUID uniqueId) {
+    public List<CustomCar> findByOwner(@RequestParam UUID uniqueId) {
         return repository.findAllByOwnerUniqueId(uniqueId);
     }
 
     @GetMapping("find_by_parent")
-    public List<CustomCar> findWithParent(@RequestParam UUID uniqueId) {
+    public List<CustomCar> findByParent(@RequestParam UUID uniqueId) {
         return repository.findAllByParentUniqueId(uniqueId);
     }
 
     @GetMapping("find_by_type")
-    public List<CustomCar> findWithType(@RequestParam String type) {
+    public List<CustomCar> findByType(@RequestParam String type) {
         return repository.findAllByTypeKey(type);
     }
 
@@ -66,5 +68,10 @@ public class CustomCarRestController {
                             @RequestParam(name = "parts", required = false) List<UUID> parts,
                             @RequestParam(name = "mileage_in_km", required = false) int mileageInKilometers) {
         return service.modify(uniqueId, name, type, parts, mileageInKilometers);
+    }
+
+    @GetMapping("modify")
+    public ResponseEntity<?> remove(@RequestParam UUID uniqueId) {
+        return service.remove(uniqueId);
     }
 }
