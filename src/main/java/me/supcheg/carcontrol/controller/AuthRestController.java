@@ -1,21 +1,12 @@
 package me.supcheg.carcontrol.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.supcheg.carcontrol.auth.JwtTokenUtil;
-import me.supcheg.carcontrol.entity.User;
-import me.supcheg.carcontrol.repository.UserRepository;
 import me.supcheg.carcontrol.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/auth")

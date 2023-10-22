@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import me.supcheg.carcontrol.auth.TokenAuthenticationFilter;
 import me.supcheg.carcontrol.entity.Car;
 import me.supcheg.carcontrol.entity.CustomCar;
-import me.supcheg.carcontrol.entity.CustomCarPart;
 import me.supcheg.carcontrol.repository.CustomCarRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service

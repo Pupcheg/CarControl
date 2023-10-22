@@ -4,7 +4,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import me.supcheg.carcontrol.auth.TokenAuthenticationFilter;
 import me.supcheg.carcontrol.entity.CarPart;
-import me.supcheg.carcontrol.entity.CustomCar;
 import me.supcheg.carcontrol.entity.CustomCarPart;
 import me.supcheg.carcontrol.repository.CustomCarPartRepository;
 import org.springframework.http.HttpStatus;
