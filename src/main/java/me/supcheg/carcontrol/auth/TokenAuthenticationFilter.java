@@ -31,7 +31,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             if (token != null) {
                 UUID uniqueId = tokenUtil.getUniqueIdFromToken(token);
                 if (uniqueId != null) {
-                    Authentication authentication = new UsernamePasswordAuthenticationToken(token, null, Collections.emptyList());
+                    Authentication authentication = new UsernamePasswordAuthenticationToken(token, uniqueId, Collections.emptyList());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
